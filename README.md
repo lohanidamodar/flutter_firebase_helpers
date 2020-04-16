@@ -12,7 +12,7 @@ Add to pubspec.yaml:
 
 ```yaml
 dependencies:
-  clean_nepali_calendar: latest
+  firebase_helpers: latest
 ```
 
 ### Using firestore service
