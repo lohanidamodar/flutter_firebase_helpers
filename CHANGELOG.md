@@ -1,3 +1,6 @@
+## 0.1.3
+* fix error when document not found on streamSingle
+
 ## 0.1.2
 * `updateData(String id, Map<String,dynamic> data)` new function added
 

@@ -25,7 +25,7 @@ class DatabaseService<T extends DatabaseItem> {
         .collection(collection)
         .document(id)
         .snapshots()
-        .map((snap) => fromDS(snap.documentID,snap.data));
+        .map((snap) => snap.exists ? fromDS(snap.documentID,snap.data) : null);
   }
 
   Stream<List<T>> streamList() {
