@@ -140,6 +140,13 @@ class DatabaseService<T extends DatabaseItem> {
       .setData(toMap(item),merge: true);
   }
 
+  Future<void> updateData(String id, Map<String,dynamic> data) {
+    return _db
+      .collection(collection)
+      .document(id)
+      .updateData(data);
+  }
+
   Future<void> removeItem(String id) {
     return _db
         .collection(collection)
