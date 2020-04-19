@@ -1,3 +1,6 @@
+## 0.1.4
+* Storage service upload method
+
 ## 0.1.3
 * fix error when document not found on streamSingle
 
