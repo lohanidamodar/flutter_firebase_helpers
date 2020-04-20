@@ -71,7 +71,7 @@ class DatabaseService<T extends DatabaseItem> {
     return query.documents.map((doc) => fromDS(doc.documentID,doc.data)).toList();
   }
 
-  Stream<List<T>> streamQueryList({List<OrderBy> orderBy,List<QueryArgs> args}) {
+  Stream<List<T>> streamQueryList({List<OrderBy> orderBy,List<QueryArgs> args, int limit, dynamic startAfter}) {
     CollectionReference collref = _db.collection(collection);
     Query ref;
     if(orderBy != null) {
@@ -89,6 +89,15 @@ class DatabaseService<T extends DatabaseItem> {
         else
           ref = ref.where(arg.key, isEqualTo: arg.value);
       }
+    }
+    if(limit != null) {
+      if(ref==null)
+        ref = collref.limit(limit);
+      else
+        ref = ref.limit(limit);
+    }
+    if(startAfter != null && orderBy != null) {
+      ref = ref.startAfter([startAfter]);
     }
     if(ref != null )
       return ref.snapshots().map((snap) => snap.documents.map((doc) => fromDS(doc.documentID,doc.data)).toList());

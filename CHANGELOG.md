@@ -1,3 +1,6 @@
+## 0.1.5
+* `streamQueryList` now supports `limit` and `startAfter`
+
 ## 0.1.4
 * Storage service upload method
 
