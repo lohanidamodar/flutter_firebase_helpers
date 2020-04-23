@@ -7,35 +7,42 @@ abstract class DatabaseItem {
 }
 
 
-class DatabaseService<T extends DatabaseItem> {
-  final String collection;
+class DatabaseService<T> {
+  String _collection;
   final Firestore _db = Firestore.instance;
   final T Function(String, Map<String,dynamic>) fromDS;
   final Map<String,dynamic> Function(T) toMap;
-  DatabaseService(this.collection, {this.fromDS,this.toMap});
+  DatabaseService(String collection, {this.fromDS,this.toMap}):
+    _collection=collection;
+
+  Firestore get db => _db;
+
+  set collection(String collection){
+    _collection = collection;
+  }
 
   Future<T> getSingle(String id) async {
-    var snap = await _db.collection(collection).document(id).get();
+    var snap = await _db.collection(_collection).document(id).get();
     if(!snap.exists) return null;
     return fromDS(snap.documentID,snap.data);
   }
 
   Stream<T> streamSingle(String id) {
     return _db
-        .collection(collection)
+        .collection(_collection)
         .document(id)
         .snapshots()
         .map((snap) => snap.exists ? fromDS(snap.documentID,snap.data) : null);
   }
 
   Stream<List<T>> streamList() {
-    var ref = _db.collection(collection);
+    var ref = _db.collection(_collection);
     return ref.snapshots().map((list) =>
         list.documents.map((doc) => fromDS(doc.documentID,doc.data)).toList());
   }
 
   Future<List<T>> getQueryList({List<OrderBy> orderBy, List<QueryArgs> args, int limit, dynamic startAfter}) async {
-    CollectionReference collref = _db.collection(collection);
+    CollectionReference collref = _db.collection(_collection);
     Query ref;
     if(args != null ) {
       for(QueryArgs arg in args) {
@@ -72,7 +79,7 @@ class DatabaseService<T extends DatabaseItem> {
   }
 
   Stream<List<T>> streamQueryList({List<OrderBy> orderBy,List<QueryArgs> args, int limit, dynamic startAfter}) {
-    CollectionReference collref = _db.collection(collection);
+    CollectionReference collref = _db.collection(_collection);
     Query ref;
     if(orderBy != null) {
       orderBy.forEach((order) {
@@ -106,7 +113,7 @@ class DatabaseService<T extends DatabaseItem> {
   }
 
   Future<List<T>> getListFromTo(String field, DateTime from, DateTime to,{List<QueryArgs> args = const []}) async {
-    var ref = _db.collection(collection)
+    var ref = _db.collection(_collection)
       .orderBy(field);
     for(QueryArgs arg in args) {
       ref = ref.where(arg.key, isEqualTo: arg.value);
@@ -118,7 +125,7 @@ class DatabaseService<T extends DatabaseItem> {
   }
   
   Stream<List<T>> streamListFromTo(String field, DateTime from, DateTime to,{List<QueryArgs> args = const[]}) {
-    var ref = _db.collection(collection)
+    var ref = _db.collection(_collection)
       .orderBy(field,descending: true);
     for(QueryArgs arg in args) {
       ref = ref.where(arg.key, isEqualTo: arg.value);
@@ -132,33 +139,26 @@ class DatabaseService<T extends DatabaseItem> {
   Future<dynamic> createItem(T item, {String id}) {
     if(id != null) {
       return _db
-        .collection(collection)
+        .collection(_collection)
         .document(id)
         .setData(toMap(item));
     }else{
       return _db
-          .collection(collection)
+          .collection(_collection)
           .add(toMap(item));
     }
   }
 
-  Future<void> updateItem(T item) {
-    return _db
-      .collection(collection)
-      .document(item.id)
-      .setData(toMap(item),merge: true);
-  }
-
   Future<void> updateData(String id, Map<String,dynamic> data) {
     return _db
-      .collection(collection)
+      .collection(_collection)
       .document(id)
       .updateData(data);
   }
 
   Future<void> removeItem(String id) {
     return _db
-        .collection(collection)
+        .collection(_collection)
         .document(id)
         .delete();
   }
