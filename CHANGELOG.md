@@ -1,3 +1,6 @@
+## 0.1.8
+* Now supports all kinds of query parameters check `QueryArgsV2` class for more details
+
 ## 0.1.7
 * fixed collection getter
 
