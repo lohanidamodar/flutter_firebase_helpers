@@ -239,6 +239,13 @@ class DatabaseService<T> {
       return _db.collection(collection).add(toMap(item));
     }
   }
+  Future<dynamic> create(Map<String,dynamic> data, {String id}) {
+    if (id != null) {
+      return _db.collection(collection).document(id).setData(data);
+    } else {
+      return _db.collection(collection).add(data);
+    }
+  }
 
   Future<void> updateData(String id, Map<String, dynamic> data) {
     return _db.collection(collection).document(id).updateData(data);

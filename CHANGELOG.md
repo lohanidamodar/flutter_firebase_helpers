@@ -1,3 +1,6 @@
+## 0.1.9
+* Now supports create new item using map instead of model `create(Map<String,dynamic> data, {String id})`
+
 ## 0.1.8
 * Now supports all kinds of query parameters check `QueryArgsV2` class for more details
 
