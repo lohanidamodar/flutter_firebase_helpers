@@ -104,10 +104,10 @@ class DatabaseService<T> {
       ref = ref.startAt([startAt]);
     }
     if (endAt != null && orderBy != null) {
-      ref = ref.endAt([startAt]);
+      ref = ref.endAt([endAt]);
     }
     if (endBefore != null && orderBy != null) {
-      ref = ref.startAt([endBefore]);
+      ref = ref.endBefore([endBefore]);
     }
     QuerySnapshot query;
     if (ref != null)
@@ -189,10 +189,10 @@ class DatabaseService<T> {
       ref = ref.startAt([startAt]);
     }
     if (endAt != null && orderBy != null) {
-      ref = ref.endAt([startAt]);
+      ref = ref.endAt([endAt]);
     }
     if (endBefore != null && orderBy != null) {
-      ref = ref.startAt([endBefore]);
+      ref = ref.endBefore([endBefore]);
     }
     if (ref != null)
       return ref.snapshots().map((snap) => snap.documents

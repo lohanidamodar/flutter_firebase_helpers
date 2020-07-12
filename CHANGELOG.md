@@ -1,3 +1,6 @@
+## 0.1.11
+* Fix query cursor errors
+
 ## 0.1.10
 * Now supports query cursors
 
