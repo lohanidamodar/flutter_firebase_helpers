@@ -34,11 +34,15 @@ class DatabaseService<T> {
         list.documents.map((doc) => fromDS(doc.documentID, doc.data)).toList());
   }
 
-  Future<List<T>> getQueryList(
-      {List<OrderBy> orderBy,
-      List<QueryArgs> args,
-      int limit,
-      dynamic startAfter}) async {
+  Future<List<T>> getQueryList({
+    List<OrderBy> orderBy,
+    List<QueryArgs> args,
+    int limit,
+    dynamic startAfter,
+    dynamic startAt,
+    dynamic endAt,
+    dynamic endBefore,
+  }) async {
     CollectionReference collref = _db.collection(collection);
     Query ref;
     if (args != null) {
@@ -69,7 +73,8 @@ class DatabaseService<T> {
               arrayContains: arg.arrayContains,
               arrayContainsAny: arg.arrayContainsAny,
               whereIn: arg.whereIn,
-            );;
+            );
+          ;
         } else {
           if (ref == null)
             ref = collref.where(arg.key, isEqualTo: arg.value);
@@ -95,6 +100,15 @@ class DatabaseService<T> {
     if (startAfter != null && orderBy != null) {
       ref = ref.startAfter([startAfter]);
     }
+    if (startAt != null && orderBy != null) {
+      ref = ref.startAt([startAt]);
+    }
+    if (endAt != null && orderBy != null) {
+      ref = ref.endAt([startAt]);
+    }
+    if (endBefore != null && orderBy != null) {
+      ref = ref.startAt([endBefore]);
+    }
     QuerySnapshot query;
     if (ref != null)
       query = await ref.getDocuments();
@@ -106,11 +120,15 @@ class DatabaseService<T> {
         .toList();
   }
 
-  Stream<List<T>> streamQueryList(
-      {List<OrderBy> orderBy,
-      List<QueryArgs> args,
-      int limit,
-      dynamic startAfter}) {
+  Stream<List<T>> streamQueryList({
+    List<OrderBy> orderBy,
+    List<QueryArgs> args,
+    int limit,
+    dynamic startAfter,
+    dynamic startAt,
+    dynamic endBefore,
+    dynamic endAt,
+  }) {
     CollectionReference collref = _db.collection(collection);
     Query ref;
     if (orderBy != null) {
@@ -123,7 +141,7 @@ class DatabaseService<T> {
     }
     if (args != null) {
       for (final arg in args) {
-        if(arg is QueryArgsV2) {
+        if (arg is QueryArgsV2) {
           if (ref == null)
             ref = collref.where(
               arg.key,
@@ -150,13 +168,11 @@ class DatabaseService<T> {
               arrayContainsAny: arg.arrayContainsAny,
               whereIn: arg.whereIn,
             );
-
-        }else{
+        } else {
           if (ref == null)
             ref = collref.where(arg.key, isEqualTo: arg.value);
           else
             ref = ref.where(arg.key, isEqualTo: arg.value);
-
         }
       }
     }
@@ -168,6 +184,15 @@ class DatabaseService<T> {
     }
     if (startAfter != null && orderBy != null) {
       ref = ref.startAfter([startAfter]);
+    }
+    if (startAt != null && orderBy != null) {
+      ref = ref.startAt([startAt]);
+    }
+    if (endAt != null && orderBy != null) {
+      ref = ref.endAt([startAt]);
+    }
+    if (endBefore != null && orderBy != null) {
+      ref = ref.startAt([endBefore]);
     }
     if (ref != null)
       return ref.snapshots().map((snap) => snap.documents
@@ -183,20 +208,20 @@ class DatabaseService<T> {
       {List<QueryArgs> args = const []}) async {
     var ref = _db.collection(collection).orderBy(field);
     for (final arg in args) {
-      if(arg is QueryArgsV2) {
+      if (arg is QueryArgsV2) {
         ref = ref.where(
-              arg.key,
-              isEqualTo: arg.isEqualTo,
-              isGreaterThan: arg.isGreaterThan,
-              isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
-              isLessThan: arg.isLessThan,
-              isLessThanOrEqualTo: arg.isLessThanOrEqualTo,
-              isNull: arg.isNull,
-              arrayContains: arg.arrayContains,
-              arrayContainsAny: arg.arrayContainsAny,
-              whereIn: arg.whereIn,
-            );
-      }else{
+          arg.key,
+          isEqualTo: arg.isEqualTo,
+          isGreaterThan: arg.isGreaterThan,
+          isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
+          isLessThan: arg.isLessThan,
+          isLessThanOrEqualTo: arg.isLessThanOrEqualTo,
+          isNull: arg.isNull,
+          arrayContains: arg.arrayContains,
+          arrayContainsAny: arg.arrayContainsAny,
+          whereIn: arg.whereIn,
+        );
+      } else {
         ref = ref.where(arg.key, isEqualTo: arg.value);
       }
     }
@@ -210,20 +235,20 @@ class DatabaseService<T> {
       {List<QueryArgs> args = const []}) {
     var ref = _db.collection(collection).orderBy(field, descending: true);
     for (final arg in args) {
-      if(arg is QueryArgsV2) {
+      if (arg is QueryArgsV2) {
         ref = ref.where(
-              arg.key,
-              isEqualTo: arg.isEqualTo,
-              isGreaterThan: arg.isGreaterThan,
-              isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
-              isLessThan: arg.isLessThan,
-              isLessThanOrEqualTo: arg.isLessThanOrEqualTo,
-              isNull: arg.isNull,
-              arrayContains: arg.arrayContains,
-              arrayContainsAny: arg.arrayContainsAny,
-              whereIn: arg.whereIn,
-            );
-      }else{
+          arg.key,
+          isEqualTo: arg.isEqualTo,
+          isGreaterThan: arg.isGreaterThan,
+          isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
+          isLessThan: arg.isLessThan,
+          isLessThanOrEqualTo: arg.isLessThanOrEqualTo,
+          isNull: arg.isNull,
+          arrayContains: arg.arrayContains,
+          arrayContainsAny: arg.arrayContainsAny,
+          whereIn: arg.whereIn,
+        );
+      } else {
         ref = ref.where(arg.key, isEqualTo: arg.value);
       }
     }
@@ -239,7 +264,8 @@ class DatabaseService<T> {
       return _db.collection(collection).add(toMap(item));
     }
   }
-  Future<dynamic> create(Map<String,dynamic> data, {String id}) {
+
+  Future<dynamic> create(Map<String, dynamic> data, {String id}) {
     if (id != null) {
       return _db.collection(collection).document(id).setData(data);
     } else {

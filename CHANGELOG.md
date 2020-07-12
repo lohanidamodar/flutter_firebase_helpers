@@ -1,3 +1,6 @@
+## 0.1.10
+* Now supports query cursors
+
 ## 0.1.9
 * Now supports create new item using map instead of model `create(Map<String,dynamic> data, {String id})`
 
