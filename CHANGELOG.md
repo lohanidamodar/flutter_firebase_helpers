@@ -1,3 +1,6 @@
+## 0.2.0
+* updated to work with latest flutter fire updates to cloud firestore plugin
+
 ## 0.1.11
 * Fix query cursor errors
 

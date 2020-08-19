@@ -1,14 +1,14 @@
 name: firebase_helpers
 description: A package that provides various Google Firebase related services helpers. Provides helpers to perform queries on firestore, firebase auth etc.
-version: 0.1.11
+version: 0.2.0
 homepage: https://github.com/lohanidamodar/flutter_firebase_helpers
 environment:
   sdk: ">=2.1.0 <3.0.0"
 dependencies:
   flutter:
     sdk: flutter
-  cloud_firestore: ^0.13.7
-  firebase_storage: ^3.1.6
+  cloud_firestore: ^0.14.0
+  firebase_storage: ^4.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
