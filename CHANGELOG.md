@@ -1,3 +1,6 @@
+## 0.2.1
+* updated dart doc comments
+
 ## 0.2.0
 * updated to work with latest flutter fire updates to cloud firestore plugin
 
