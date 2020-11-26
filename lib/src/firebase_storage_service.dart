@@ -11,9 +11,9 @@ class StorageService {
   /// Upload given [file] to the provided [path]
   /// returns the downloadUrl for the uploaded file.
   Future<dynamic> uploadFile(String path, File file) async {
-    StorageReference ref = _storage.ref().child(path);
-    StorageUploadTask uploadTask = ref.putFile(file);
-    await uploadTask.onComplete;
+    Reference ref = _storage.ref().child(path);
+    UploadTask uploadTask = ref.putFile(file);
+    await uploadTask;
     return ref.getDownloadURL();
   }
 }

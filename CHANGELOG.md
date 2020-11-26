@@ -1,3 +1,6 @@
+## 0.2.2
+* Updated dependencies and firebase storage
+
 ## 0.2.1
 * updated dart doc comments
 
