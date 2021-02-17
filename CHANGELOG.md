@@ -1,3 +1,6 @@
+## 0.2.3
+* Updated dependencies
+
 ## 0.2.2
 * Updated dependencies and firebase storage
 
