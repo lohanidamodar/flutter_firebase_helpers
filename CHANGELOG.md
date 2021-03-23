@@ -1,3 +1,9 @@
+## 0.3.0
+* Null safe version
+* Removed depricated DatabaseItem
+* Removed depricated QueryArgs
+* Removed depricated CreateItem
+
 ## 0.2.3
 * Updated dependencies
 
