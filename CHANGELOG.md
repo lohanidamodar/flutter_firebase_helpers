@@ -1,3 +1,6 @@
+## 0.3.1
+* Bug fix
+
 ## 0.3.0
 * Null safe version
 * Removed depricated DatabaseItem

@@ -58,7 +58,7 @@ class DatabaseService<T> {
   Stream<List<T>> streamList() {
     var ref = _db.collection(collection);
     return ref.snapshots().map(
-        (list) => list.docs.map((doc) => fromDS!(doc.id, doc.data())).toList());
+        (list) => list.docs.map((doc) => fromDS(doc.id, doc.data())).toList());
   }
 
   /// Returns the list of documents from [collection], in the order provided in
@@ -138,7 +138,7 @@ class DatabaseService<T> {
     else
       query = await collref.get();
 
-    return query.docs.map((doc) => fromDS!(doc.id, doc.data())).toList();
+    return query.docs.map((doc) => fromDS(doc.id, doc.data())).toList();
   }
 
   /// Returns the list of documents from [collection], in the order provided in
@@ -215,10 +215,10 @@ class DatabaseService<T> {
     }
     if (ref != null)
       return ref!.snapshots().map((snap) =>
-          snap.docs.map((doc) => fromDS!(doc.id, doc.data())).toList());
+          snap.docs.map((doc) => fromDS(doc.id, doc.data())).toList());
     else
       return collref.snapshots().map((snap) =>
-          snap.docs.map((doc) => fromDS!(doc.id, doc.data())).toList());
+          snap.docs.map((doc) => fromDS(doc.id, doc.data())).toList());
   }
 
   /// Returns the list of documents from [from] date to [to] date matched by [field]
@@ -242,7 +242,7 @@ class DatabaseService<T> {
         );
     }
     QuerySnapshot query = await ref.startAt([from]).endAt([to]).get();
-    return query.docs.map((doc) => fromDS!(doc.id, doc.data())).toList();
+    return query.docs.map((doc) => fromDS(doc.id, doc.data())).toList();
   }
 
   /// Returns the list of documents from [from] date to [to] date matched by [field] from [collection]
@@ -267,7 +267,7 @@ class DatabaseService<T> {
     }
     var query = ref.startAfter([to]).endAt([from]).snapshots();
     return query.map(
-        (snap) => snap.docs.map((doc) => fromDS!(doc.id, doc.data())).toList());
+        (snap) => snap.docs.map((doc) => fromDS(doc.id, doc.data())).toList());
   }
 
   /// Creates new document based on the provided [data] and [id]  in the [collection]
