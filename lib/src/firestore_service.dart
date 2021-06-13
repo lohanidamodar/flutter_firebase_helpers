@@ -138,7 +138,9 @@ class DatabaseService<T> {
     else
       query = await collref.get();
 
-    return query.docs.map((doc) => fromDS(doc.id, doc.data())).toList();
+    return query.docs
+        .map((doc) => fromDS(doc.id, doc.data() as Map<String, dynamic>))
+        .toList();
   }
 
   /// Returns the list of documents from [collection], in the order provided in
@@ -214,11 +216,13 @@ class DatabaseService<T> {
       ref = ref!.endBefore([endBefore]);
     }
     if (ref != null)
-      return ref!.snapshots().map((snap) =>
-          snap.docs.map((doc) => fromDS(doc.id, doc.data())).toList());
+      return ref!.snapshots().map((snap) => snap.docs
+          .map((doc) => fromDS(doc.id, doc.data() as Map<String, dynamic>))
+          .toList());
     else
-      return collref.snapshots().map((snap) =>
-          snap.docs.map((doc) => fromDS(doc.id, doc.data())).toList());
+      return collref.snapshots().map((snap) => snap.docs
+          .map((doc) => fromDS(doc.id, doc.data() as Map<String, dynamic>))
+          .toList());
   }
 
   /// Returns the list of documents from [from] date to [to] date matched by [field]
@@ -228,21 +232,23 @@ class DatabaseService<T> {
       {List<QueryArgsV2> args = const []}) async {
     var ref = _db.collection(collection).orderBy(field);
     for (final arg in args) {
-        ref = ref.where(
-          arg.key,
-          isEqualTo: arg.isEqualTo,
-          isGreaterThan: arg.isGreaterThan,
-          isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
-          isLessThan: arg.isLessThan,
-          isLessThanOrEqualTo: arg.isLessThanOrEqualTo,
-          isNull: arg.isNull,
-          arrayContains: arg.arrayContains,
-          arrayContainsAny: arg.arrayContainsAny,
-          whereIn: arg.whereIn,
-        );
+      ref = ref.where(
+        arg.key,
+        isEqualTo: arg.isEqualTo,
+        isGreaterThan: arg.isGreaterThan,
+        isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
+        isLessThan: arg.isLessThan,
+        isLessThanOrEqualTo: arg.isLessThanOrEqualTo,
+        isNull: arg.isNull,
+        arrayContains: arg.arrayContains,
+        arrayContainsAny: arg.arrayContainsAny,
+        whereIn: arg.whereIn,
+      );
     }
     QuerySnapshot query = await ref.startAt([from]).endAt([to]).get();
-    return query.docs.map((doc) => fromDS(doc.id, doc.data())).toList();
+    return query.docs
+        .map((doc) => fromDS(doc.id, doc.data() as Map<String, dynamic>))
+        .toList();
   }
 
   /// Returns the list of documents from [from] date to [to] date matched by [field] from [collection]
