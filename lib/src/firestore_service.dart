@@ -82,6 +82,7 @@ class DatabaseService<T> {
           ref = collref.where(
             arg.key,
             isEqualTo: arg.isEqualTo,
+            isNotEqualTo: arg.isNotEqualTo,
             isGreaterThan: arg.isGreaterThan,
             isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
             isLessThan: arg.isLessThan,
@@ -95,6 +96,7 @@ class DatabaseService<T> {
           ref = ref.where(
             arg.key,
             isEqualTo: arg.isEqualTo,
+            isNotEqualTo: arg.isNotEqualTo,
             isGreaterThan: arg.isGreaterThan,
             isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
             isLessThan: arg.isLessThan,
@@ -173,6 +175,7 @@ class DatabaseService<T> {
           ref = collref.where(
             arg.key,
             isEqualTo: arg.isEqualTo,
+            isNotEqualTo: arg.isNotEqualTo,
             isGreaterThan: arg.isGreaterThan,
             isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
             isLessThan: arg.isLessThan,
@@ -186,6 +189,7 @@ class DatabaseService<T> {
           ref = ref!.where(
             arg.key,
             isEqualTo: arg.isEqualTo,
+            isNotEqualTo: arg.isNotEqualTo,
             isGreaterThan: arg.isGreaterThan,
             isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
             isLessThan: arg.isLessThan,
@@ -235,6 +239,7 @@ class DatabaseService<T> {
       ref = ref.where(
         arg.key,
         isEqualTo: arg.isEqualTo,
+        isNotEqualTo: arg.isNotEqualTo,
         isGreaterThan: arg.isGreaterThan,
         isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
         isLessThan: arg.isLessThan,
@@ -261,6 +266,7 @@ class DatabaseService<T> {
       ref = ref.where(
         arg.key,
         isEqualTo: arg.isEqualTo,
+        isNotEqualTo: arg.isNotEqualTo,
         isGreaterThan: arg.isGreaterThan,
         isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
         isLessThan: arg.isLessThan,
@@ -311,6 +317,9 @@ class QueryArgsV2 {
   /// performs equality == check
   final dynamic isEqualTo;
 
+  /// performs equality != check
+  final dynamic isNotEqualTo;
+
   /// performs less than < check
   final dynamic isLessThan;
 
@@ -339,6 +348,7 @@ class QueryArgsV2 {
   QueryArgsV2(this.key,
       {this.isEqualTo,
       this.isLessThan,
+      this.isNotEqualTo,
       this.isLessThanOrEqualTo,
       this.isGreaterThan,
       this.arrayContains,
