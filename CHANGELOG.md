@@ -1,3 +1,9 @@
+## 0.6.0
+* Upgraded to cloud_firestore 4.x
+
+## 0.5.0
+* Upgrade to cloud_firestore 3.x
+
 ## 0.4.0
 * Upgraded to cloud_firestore 2.x
 
