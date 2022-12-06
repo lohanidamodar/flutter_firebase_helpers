@@ -82,6 +82,7 @@ class DatabaseService<T> {
           ref = collref.where(
             arg.key,
             isEqualTo: arg.isEqualTo,
+            isNotEqualTo: arg.isNotEqualTo,
             isGreaterThan: arg.isGreaterThan,
             isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
             isLessThan: arg.isLessThan,
@@ -90,11 +91,13 @@ class DatabaseService<T> {
             arrayContains: arg.arrayContains,
             arrayContainsAny: arg.arrayContainsAny,
             whereIn: arg.whereIn,
+            whereNotIn: arg.whereNotIn,
           );
         else
           ref = ref.where(
             arg.key,
             isEqualTo: arg.isEqualTo,
+            isNotEqualTo: arg.isNotEqualTo,
             isGreaterThan: arg.isGreaterThan,
             isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
             isLessThan: arg.isLessThan,
@@ -103,6 +106,7 @@ class DatabaseService<T> {
             arrayContains: arg.arrayContains,
             arrayContainsAny: arg.arrayContainsAny,
             whereIn: arg.whereIn,
+            whereNotIn: arg.whereNotIn,
           );
       }
     }
@@ -173,6 +177,7 @@ class DatabaseService<T> {
           ref = collref.where(
             arg.key,
             isEqualTo: arg.isEqualTo,
+            isNotEqualTo: arg.isNotEqualTo,
             isGreaterThan: arg.isGreaterThan,
             isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
             isLessThan: arg.isLessThan,
@@ -181,11 +186,13 @@ class DatabaseService<T> {
             arrayContains: arg.arrayContains,
             arrayContainsAny: arg.arrayContainsAny,
             whereIn: arg.whereIn,
+            whereNotIn: arg.whereNotIn,
           );
         else
           ref = ref!.where(
             arg.key,
             isEqualTo: arg.isEqualTo,
+            isNotEqualTo: arg.isNotEqualTo,
             isGreaterThan: arg.isGreaterThan,
             isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
             isLessThan: arg.isLessThan,
@@ -194,6 +201,7 @@ class DatabaseService<T> {
             arrayContains: arg.arrayContains,
             arrayContainsAny: arg.arrayContainsAny,
             whereIn: arg.whereIn,
+            whereNotIn: arg.whereNotIn,
           );
       }
     }
@@ -235,6 +243,7 @@ class DatabaseService<T> {
       ref = ref.where(
         arg.key,
         isEqualTo: arg.isEqualTo,
+        isNotEqualTo: arg.isNotEqualTo,
         isGreaterThan: arg.isGreaterThan,
         isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
         isLessThan: arg.isLessThan,
@@ -243,6 +252,7 @@ class DatabaseService<T> {
         arrayContains: arg.arrayContains,
         arrayContainsAny: arg.arrayContainsAny,
         whereIn: arg.whereIn,
+        whereNotIn: arg.whereNotIn,
       );
     }
     QuerySnapshot query = await ref.startAt([from]).endAt([to]).get();
@@ -261,6 +271,7 @@ class DatabaseService<T> {
       ref = ref.where(
         arg.key,
         isEqualTo: arg.isEqualTo,
+        isNotEqualTo: arg.isNotEqualTo,
         isGreaterThan: arg.isGreaterThan,
         isGreaterThanOrEqualTo: arg.isGreaterThanOrEqualTo,
         isLessThan: arg.isLessThan,
@@ -269,6 +280,7 @@ class DatabaseService<T> {
         arrayContains: arg.arrayContains,
         arrayContainsAny: arg.arrayContainsAny,
         whereIn: arg.whereIn,
+        whereNotIn: arg.whereNotIn,
       );
     }
     var query = ref.startAfter([to]).endAt([from]).snapshots();
@@ -311,6 +323,9 @@ class QueryArgsV2 {
   /// performs equality == check
   final dynamic isEqualTo;
 
+  /// performs equality != check
+  final dynamic isNotEqualTo;
+
   /// performs less than < check
   final dynamic isLessThan;
 
@@ -332,6 +347,9 @@ class QueryArgsV2 {
   /// performs where in check
   final List<dynamic>? whereIn;
 
+  /// performs where in check
+  final List<dynamic>? whereNotIn;
+
   /// performs if is null check
   final bool? isNull;
 
@@ -339,11 +357,13 @@ class QueryArgsV2 {
   QueryArgsV2(this.key,
       {this.isEqualTo,
       this.isLessThan,
+      this.isNotEqualTo,
       this.isLessThanOrEqualTo,
       this.isGreaterThan,
       this.arrayContains,
       this.arrayContainsAny,
       this.whereIn,
+      this.whereNotIn,
       this.isNull,
       this.isGreaterThanOrEqualTo});
 }
