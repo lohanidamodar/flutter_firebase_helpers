@@ -1,26 +1,22 @@
 name: Publish
+
 on:
   push:
-    branches:   
-      - master
+    tags:
+      - '[0-9]+\.[0-9]+\.[0-9]+*'
 jobs:
-  build:
+  publish:
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
-    container:
-      image:  google/dart:latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup credentials
-      run: | 
-        mkdir -p ~/.config/dart 
-        cat <<EOF > ~/.config/dart/pub-credentials.json
-        {
-          "accessToken":"${{ secrets.OAUTH_ACCESS_TOKEN }}",
-          "refreshToken":"${{ secrets.OAUTH_REFRESH_TOKEN }}",
-          "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
-          "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
-          "expiration": 1670311186762
-        }
-        EOF
-    - name: Publish package
-      run: dart pub publish -f
+      - uses: actions/checkout@v3
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Install dependencies
+        run: flutter pub get
+      - uses: dart-lang/setup-dart@v1
+      - name: Publish
+        run: dart pub publish --force
