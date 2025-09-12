@@ -1,3 +1,10 @@
+## 0.8.0
+* Upgraded to cloud_firestore 6.x
+* Upgrade to firebase_storage 13.x
+
+## 0.7.0
+* Upgraded to cloud_firestore 5.x
+
 ## 0.6.0
 * Upgraded to cloud_firestore 4.x
 
